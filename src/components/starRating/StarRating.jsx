@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa";
 import "./style.scss"
 
 const colors = {
-  orange: "#FFBA5A",
+  orange: "#ffd700",
   grey: "#082a5e",
 };
 

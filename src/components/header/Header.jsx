@@ -8,6 +8,7 @@ import "./style.scss";
 
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import logo from "../../assets/moviemania-logo.png";
+import { UserButton } from "@clerk/clerk-react";
 
 const Header = () => {
   const [show, setShow] = useState("top");
@@ -82,6 +83,9 @@ const Header = () => {
           </li>
           <li className="menuItem">
             <HiOutlineSearch onClick={openSearch} />
+          </li>
+          <li>
+          <UserButton/>
           </li>
         </ul>
         <div className="mobileMenuItems">

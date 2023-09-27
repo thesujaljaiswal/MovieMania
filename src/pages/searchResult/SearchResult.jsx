@@ -18,6 +18,7 @@ const SearchResult = () => {
     setLoading(true);
     fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}&`).then(
       (res) => {
+        console.log(res)
         setData(res);
         setPageNum((prev) => prev + 1);
         setLoading(false);
@@ -26,7 +27,6 @@ const SearchResult = () => {
   };
 
   const fetchNextPageData = () => {
-    setLoading(true);
     fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}&`).then(
       (res) => {
         if (data?.results) {

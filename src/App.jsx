@@ -10,8 +10,15 @@ import Details from "./pages/details/Details";
 import SearchResult from "./pages/searchResult/SearchResult";
 import Explore from "./pages/explore/Explore";
 import PageNotFound from "./pages/404/PageNotFound";
+import { ClerkProvider,SignedIn,
+  SignedOut,
+  useUser,
+  RedirectToSignIn,} from "@clerk/clerk-react";
+  import {dark} from "@clerk/themes";
 
 function App() {
+  const CLERK_KEY = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
+
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
 
@@ -44,21 +51,28 @@ function App() {
     data.map(({ genres }) => {
       return genres.map((item) => (allGenres[item.id] = item));
     });
-    console.log(data)
+    console.log(data);
     dispatch(getGenres(allGenres));
   };
 
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/:mediaType/:id" element={<Details />} />
-        <Route path="/search/:query" element={<SearchResult />} />
-        <Route path="/explore/:mediaType" element={<Explore />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-      <Footer />
+      <ClerkProvider publishableKey={CLERK_KEY} appearance={dark} >
+        <SignedIn>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:mediaType/:id" element={<Details />} />
+          <Route path="/search/:query" element={<SearchResult />} />
+          <Route path="/explore/:mediaType" element={<Explore />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        <Footer />
+        </SignedIn>
+        <SignedOut>
+          <RedirectToSignIn />
+        </SignedOut>
+      </ClerkProvider>
     </BrowserRouter>
   );
 }
