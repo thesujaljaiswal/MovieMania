@@ -1,0 +1,21 @@
+@import "../../mixnins.scss";
+.starElement{
+    width: 20px;
+    height: 20px;
+    @include ssm{
+        width: 34px;
+        height: 34px;
+    }
+}
+
+.ratingButton{
+    width: 200px;
+    &:hover{
+        color: #ffd700;
+        background-color: var(--black);
+        transition: ease-in 0.1s;
+    }
+    @include ssm{
+        width: 300px;
+    }
+}
