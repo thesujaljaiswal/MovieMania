@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./style.scss"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setRatings } from "../../store/ratingSlice";
 
 const colors = {
   orange: "#ffd700",
   grey: "#082a5e",
 };
 
-function StarRating() {
+function StarRating({id}) {
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
   const [size, setSize] = useState(34);
+  const {rating}=useSelector(state=>state.rating)
+  const dispatch=useDispatch();
   const stars = Array(10).fill(0);
   const zero = () => {
     setCurrentValue(0)
@@ -19,6 +24,8 @@ function StarRating() {
 
   const handleClick = (value) => {
     setCurrentValue(value);
+    var temp={...rating,[id]:value};
+    dispatch(setRatings(temp))
   };
 
   const handleMouseOver = (newHoverValue) => {
@@ -29,6 +36,10 @@ function StarRating() {
     setHoverValue(undefined);
   };
 
+  useEffect(()=>{
+    if(rating[id])
+    setCurrentValue(rating[id])   
+  })
   return (
     <div style={styles.container}>
         <div className="ratingsHeader">

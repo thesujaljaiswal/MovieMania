@@ -13,9 +13,9 @@ const Details = () => {
   const { data, loading } = useFetch(`/${mediaType}/${id}/videos?`);
   const { data: credits, loading: creditsLoading } = useFetch(`/${mediaType}/${id}/credits?`);
   return (
-    <div>
+    <div> 
       <DetailsBanner video={data?.results?.[0]} crew={credits?.crew} />
-      <StarRating/>
+      <StarRating id={id}/>
       <Cast data={credits?.cast} loading={creditsLoading} />
       <VideosSection data={data} loading={loading}/>
       <Similar mediaType={mediaType} id={id} />

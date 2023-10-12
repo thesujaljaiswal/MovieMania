@@ -51,7 +51,7 @@ function App() {
     data.map(({ genres }) => {
       return genres.map((item) => (allGenres[item.id] = item));
     });
-    console.log(data);
+    // console.log(data);
     dispatch(getGenres(allGenres));
   };
 
