@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa";
 import "./style.scss"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRatings } from "../../store/ratingSlice";
+import { setRatings,removeAlert } from "../../store/ratingSlice";
 
 const colors = {
   orange: "#ffd700",
@@ -14,18 +14,18 @@ function StarRating({id}) {
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(undefined);
   const [size, setSize] = useState(34);
-  const {rating}=useSelector(state=>state.rating)
+  const {rating,changing}=useSelector(state=>state.rating)
   const dispatch=useDispatch();
   const stars = Array(10).fill(0);
-  const zero = () => {
-    setCurrentValue(0)
-  }
-  
+
+
+  const submitRating = () => {
+    var temp={...rating,[id]:currentValue};
+    dispatch(setRatings(temp))
+  }  
 
   const handleClick = (value) => {
     setCurrentValue(value);
-    var temp={...rating,[id]:value};
-    dispatch(setRatings(temp))
   };
 
   const handleMouseOver = (newHoverValue) => {
@@ -37,9 +37,16 @@ function StarRating({id}) {
   };
 
   useEffect(()=>{
+    if(changing){
+      setTimeout(() => {
+        dispatch(removeAlert())
+      }, 1500);
+    }
+  },[changing])
+  useEffect(()=>{
     if(rating[id])
     setCurrentValue(rating[id])   
-  })
+  },[rating])
   return (
     <div style={styles.container}>
         <div className="ratingsHeader">
@@ -69,7 +76,8 @@ function StarRating({id}) {
         })}
 
       </div>
-      <button className="ratingButton" onClick={zero} style={styles.button}>Submit</button>
+      <button className="ratingButton" onClick={submitRating} style={styles.button}>
+        {changing?'Submitted':'Submit'}</button>
     </div>
   );
 }
