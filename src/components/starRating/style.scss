@@ -10,6 +10,7 @@
 
 .ratingButton{
     width: 200px;
+    cursor:pointer;
     &:hover{
         color: #ffd700;
         background-color: var(--black);
